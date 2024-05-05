@@ -68,7 +68,7 @@ function FormComponent({ generationComplete }) {
                 </section>
             </section>
             <section className='w-full flex md:flex-row flex-col justify-center items-center md:gap-4 gap-2'>
-                <Button onClick={handleRandomizeData} disabled={randLoading || generateLoading} title={randLoading ? "Randomizing..." : "Randomize data"}>Randomize <Image src={StarsIcon} alt='Stars Icon' title='Stars icon' className='w-[24px] group-hover:rotate-45 duration-300'></Image></Button>
+                <Button onClick={handleRandomizeData} disabled={randLoading || generateLoading} type="button" title={randLoading ? "Randomizing..." : "Randomize data"}>Randomize <Image src={StarsIcon} alt='Stars Icon' title='Stars icon' className='w-[24px] group-hover:rotate-45 duration-300'></Image></Button>
                 <Button disabled={generateLoading || randLoading} title={generateLoading ? "Generating..." : "Generate table"} type="submit" buttonType={1}>{generateLoading ? <LoadingElement/> : <>Generate <IoIosArrowRoundForward className='text-2xl group-hover:rotate-45 duration-300'/></>}</Button>
             </section>
         </form>

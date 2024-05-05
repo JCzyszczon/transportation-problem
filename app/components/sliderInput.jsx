@@ -64,7 +64,7 @@ function SliderInput({ startValue, endValue, stepValue, styleType, randValue, on
 
     return (
         <div className='w-full flex justify-center items-center gap-2 range relative'>
-            <button title={`Set value to ${startValue}`} onClick={setMinValue} className={`${styleType == 2 ? 'bg-primeColor hover:bg-primeColorHover' : 'bg-thirdColor hover:bg-thirdColorHover'} duration-300 px-1 rounded-md text-backgroundColor`}>{startValue ? startValue : 0}</button>
+            <button type="button" title={`Set value to ${startValue}`} onClick={setMinValue} className={`${styleType == 2 ? 'bg-primeColor hover:bg-primeColorHover' : 'bg-thirdColor hover:bg-thirdColorHover'} duration-300 px-1 rounded-md text-backgroundColor`}>{startValue ? startValue : 0}</button>
             <div className={`w-full flex justify-center items-center gap-2 ${styleType == 2 ? 'style2' : 'style1'} range relative`}>
                 <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
                 {isSliderChanged && (
@@ -75,7 +75,7 @@ function SliderInput({ startValue, endValue, stepValue, styleType, randValue, on
                 </AnimatePresence>
                 <input type='range' min={startValue ? startValue : 0} max={endValue ? endValue : 10} step={stepValue ? stepValue : 1} value={itemValue} onChange={handleChange} onPointerDown={handleDisplayOn} onPointerUp={handleDisplayOff} onMouseDown={handleDisplayOn} onMouseUp={handleDisplayOff} onTouchStart={handleDisplayOn} onTouchEnd={handleDisplayOff} className='w-full'></input>
             </div>
-            <button title={`Set value to ${endValue}`} onClick={setMaxValue} className={`${styleType == 2 ? 'bg-thirdColor hover:bg-thirdColorHover' : 'bg-primeColor hover:bg-primeColorHover'} duration-300 px-1 rounded-md text-backgroundColor`}>{endValue ? endValue : 10}</button>
+            <button type="button" title={`Set value to ${endValue}`} onClick={setMaxValue} className={`${styleType == 2 ? 'bg-thirdColor hover:bg-thirdColorHover' : 'bg-primeColor hover:bg-primeColorHover'} duration-300 px-1 rounded-md text-backgroundColor`}>{endValue ? endValue : 10}</button>
         </div>
     )
 }
