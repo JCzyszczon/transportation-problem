@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 
-function SliderInput({ startValue, endValue, stepValue, styleType, randValue }) {
+function SliderInput({ startValue, endValue, stepValue, styleType, randValue, onValueChange }) {
     const [itemValue, setItemValue] = useState();
     const [isSliderChanged, setIsSliderChanged] = useState(false);
 
@@ -10,11 +10,13 @@ function SliderInput({ startValue, endValue, stepValue, styleType, randValue }) 
         if(randValue) {
             setItemValue(randValue);
             setIsSliderChanged(true);
+            handleValue(randValue);
             setTimeout(() => {
                 setIsSliderChanged(false);
             }, 300);
         } else if(startValue) {
             setItemValue(startValue);
+            handleValue(startValue);
         } else {
             setItemValue(0)
         }
@@ -23,6 +25,7 @@ function SliderInput({ startValue, endValue, stepValue, styleType, randValue }) 
     const handleChange = (event) => {
         setItemValue(parseInt(event.target.value));
         setIsSliderChanged(true);
+        handleValue(event.target.value);
     }
 
     const handleDisplayOn = () => {
@@ -40,6 +43,7 @@ function SliderInput({ startValue, endValue, stepValue, styleType, randValue }) 
     const setMaxValue = () => {
         setItemValue(endValue);
         setIsSliderChanged(true);
+        handleValue(endValue);
         setTimeout(() => {
             setIsSliderChanged(false);
         }, 300);
@@ -48,9 +52,14 @@ function SliderInput({ startValue, endValue, stepValue, styleType, randValue }) 
     const setMinValue = () => {
         setItemValue(startValue);
         setIsSliderChanged(true);
+        handleValue(startValue);
         setTimeout(() => {
             setIsSliderChanged(false);
         }, 300);
+    }
+
+    const handleValue = (value) => {
+        onValueChange(value);
     }
 
     return (

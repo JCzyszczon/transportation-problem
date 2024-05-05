@@ -3,7 +3,7 @@ import MainPanel from "./components/mainPanel";
 
 export default function Home() {
   return (
-    <main className="flex mainBg min-h-screen justify-center items-center">
+    <main className="flex mainBg min-h-screen justify-center items-center py-12">
       <MainPanel/>
     </main>
   );
