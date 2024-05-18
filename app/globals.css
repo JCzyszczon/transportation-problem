@@ -30,12 +30,15 @@ body {
 }
 
 .mainBg {
-  /*background-image: radial-gradient(circle at center center, transparent,rgb(33,33,33)),repeating-linear-gradient(135deg, rgb(33,33,33) 0px, rgb(33,33,33) 2px,transparent 2px, transparent 10px,rgb(33,33,33) 10px, rgb(33,33,33) 11px,transparent 11px, transparent 21px),repeating-linear-gradient(45deg, rgba(154,106,255, 0.26666666666666666) 0px, rgba(154,106,255, 0.26666666666666666) 4px,transparent 4px, transparent 8px),linear-gradient(90deg, rgb(33,33,33),rgb(33,33,33));*/
   background-image: radial-gradient(circle at center center, transparent,rgb(227,227,227)),repeating-linear-gradient(135deg, rgb(227,227,227) 0px, rgb(227,227,227) 2px,transparent 2px, transparent 10px,rgb(227,227,227) 10px, rgb(227,227,227) 11px,transparent 11px, transparent 21px),repeating-linear-gradient(45deg, rgba(154,106,255, 0.6666666666666666) 0px, rgba(154,106,255, 0.6666666666666666) 4px,transparent 4px, transparent 8px),linear-gradient(90deg, rgb(227,227,227),rgb(227,227,227));
 }
 
+.mainBg2 {
+  background-image: radial-gradient(circle at center center, transparent,rgb(227,227,227)),repeating-linear-gradient(135deg, rgb(227,227,227) 0px, rgb(227,227,227) 2px,transparent 2px, transparent 10px,rgb(227,227,227) 10px, rgb(227,227,227) 11px,transparent 11px, transparent 21px),repeating-linear-gradient(45deg, rgba(154,106,255, 0.6666666666666666) 0px, rgba(154,106,255, 0.6666666666666666) 4px,transparent 4px, transparent 8px),linear-gradient(90deg, rgb(227,227,227),rgb(227,227,227));
+  backdrop-filter: saturate(180%) blur(200%);
+}
+
 .panelGlass {
-  /*background-color: rgba(33, 33, 33, 0.65);*/
   background-color: rgba(250, 250, 246, 0.6);
   backdrop-filter: saturate(180%) blur(20px);
 }
