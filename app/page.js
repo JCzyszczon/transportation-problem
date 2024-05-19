@@ -4,7 +4,7 @@ import HelpModalButton from "./components/helpModalButton";
 
 export default function Home() {
   return (
-    <main className="flex mainBg min-h-screen justify-center items-center py-12 realtive">
+    <main className="flex mainBg min-h-screen justify-center items-center py-12 realtive overflow-hidden">
       <MainPanel/>
       <HelpModalButton/>
     </main>

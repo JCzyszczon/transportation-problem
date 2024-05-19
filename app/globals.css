@@ -43,6 +43,10 @@ body {
   backdrop-filter: saturate(180%) blur(20px);
 }
 
+.blurClass {
+  backdrop-filter: blur(6px);
+}
+
 .responsive_text2 {
   font-size: clamp(1rem, 1vw + 1.15rem, 2rem);
 }
@@ -116,4 +120,22 @@ body {
 
 .sliderValue p {
   transform: rotate(-45deg);
+}
+
+#menu-background-pattern {
+  background-image: radial-gradient(
+    rgba(154, 106, 255, 0.3) 9%, 
+    transparent 9%
+  );
+  background-position: 0% 0%;
+  background-size: 8vmin 8vmin;
+  height: 100vh;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  transition: opacity 800ms ease, 
+    background-size 800ms ease,
+    background-position 800ms ease;
+  width: 100vw;
+  z-index: 1;
 }

@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import TitleComponent from './titleComponent';
 import FormComponent from './formComponent';
 import { AnimatePresence } from 'framer-motion';
@@ -13,6 +13,17 @@ function MainPanel() {
         setIsModalOpen(true);
         setFormData(data);
     }
+
+    useEffect(() => {
+        if (isModalOpen) {
+          document.body.style.overflow = "hidden";
+        } else {
+          document.body.style.overflow = "auto";
+        }
+        return () => {
+          document.body.style.overflow = "auto";
+        };
+    }, [isModalOpen]);
 
     return (
         <>
