@@ -34,8 +34,7 @@ function TableComponent({supply, demand, closeModal, changeStage, actualState}) 
     });
 
     const submitUnitForm = (formData) => {
-        console.log(formData);
-        changeStage();
+        changeStage(formData);
     }
 
     return (
@@ -82,7 +81,7 @@ function TableComponent({supply, demand, closeModal, changeStage, actualState}) 
             </form>
             <section className='w-full flex md:flex-row flex-col justify-center items-center md:gap-4 gap-2'>
                 <Button type='button' onClick={handleClose} buttonType={2}>Cancel</Button>
-                <Button type='submit' buttonType={1} form="unitCosts">Continue <IoIosArrowRoundForward className='text-2xl group-hover:translate-x-1 duration-300'/></Button>
+                <Button type='submit' buttonType={1} form="unitCosts">Continue<IoIosArrowRoundForward className='text-2xl group-hover:translate-x-1 duration-300'/></Button>
             </section>
         </motion.section>
     )
