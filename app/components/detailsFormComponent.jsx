@@ -1,15 +1,19 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import Button from './buttonStandard';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ErrorComponent from './errorComponent';
+import LoadingElement from './loadingElement';
+import { useRouter } from 'next/navigation';
 
 function DetailsFormComponent({ changeStage, goBack, data }) {
 
     const demandHeaders = data ? Array.from({ length: data.costs[0].length }, (_, index) => index + 1) : null;
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleGoBack = () => {
         goBack();
@@ -56,7 +60,18 @@ function DetailsFormComponent({ changeStage, goBack, data }) {
     });
 
     const submitDetailsForm = (formData) => {
-        console.log(formData);
+        setLoading(true);
+
+        const finalData = {
+            ...data,
+            ...formData,
+        };
+
+        console.log(finalData);
+        setTimeout(() => {
+            setLoading(false);
+            router.push(`/solved?data=${JSON.stringify(finalData)}`);
+        }, 1000);
     }
 
     return (
@@ -172,8 +187,8 @@ function DetailsFormComponent({ changeStage, goBack, data }) {
             </form>
             }
             <section className='w-full flex md:flex-row flex-col justify-center items-center md:gap-4 gap-2'>
-                <Button type='button' onClick={handleGoBack} buttonType={2}><IoIosArrowRoundBack className='text-2xl group-hover:-translate-x-1 duration-300'/>Back</Button>
-                <Button type='submit' buttonType={1} form="detailsForm">Calculate</Button>
+                <Button type='button' onClick={handleGoBack} buttonType={2} disabled={loading} title="Go back"><IoIosArrowRoundBack className='text-2xl group-hover:-translate-x-1 duration-300'/>Back</Button>
+                <Button type='submit' buttonType={1} form="detailsForm" disabled={loading} title={loading ? "Loading" : "Calculate"}>{loading ? <LoadingElement/> : 'Calculate'}</Button>
             </section>
         </motion.section>
     )

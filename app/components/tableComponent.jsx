@@ -9,8 +9,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 function TableComponent({supply, demand, closeModal, changeStage, actualState}) {
 
-    const tableHeaders = Array.from({ length: supply }, (_, index) => index + 1);
-    const tableRows = Array.from({ length: demand }, (_, index) => index + 1);
+    const tableHeaders = Array.from({ length: demand }, (_, index) => index + 1);
+    const tableRows = Array.from({ length: supply }, (_, index) => index + 1);
 
     const handleClose = () => {
         closeModal();

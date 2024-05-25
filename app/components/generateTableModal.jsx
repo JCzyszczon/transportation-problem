@@ -19,6 +19,8 @@ export default function GenerateTableModal({ closeModal, data }) {
         }
     };
 
+    console.log(data);
+
     const handleClose = () => {
         closeModal();
     }
