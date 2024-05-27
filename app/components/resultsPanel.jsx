@@ -106,6 +106,8 @@ function ResultsPanel({ resultsData }) {
           }
         }
     
+        console.log(matrix);
+
         const finalMatrix = optimizeMatrix(matrix);
     
         return finalMatrix;
@@ -156,7 +158,8 @@ function ResultsPanel({ resultsData }) {
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
             if (matrix[i][j].transportPlan > 0) {
-              checkMatrix[i][j] = 0;
+              //checkMatrix[i][j] = 0;
+              checkMatrix[i][j] = "x";
             } else {
               checkMatrix[i][j] = matrix[i][j].totalProfit - alfa[i] - beta[j];
             }
@@ -176,16 +179,19 @@ function ResultsPanel({ resultsData }) {
         // Sprawdzenie czy największa wartość jest większa od 0
         if (value > 0) {
           // Wykonanie przesunięcia
+          console.log(checkMatrix);
           const maxPos = findMaxValueInMatrix(checkMatrix);
           const path = obliczPrzesuniecie(checkMatrix, maxPos);
           const smallestTransportPlan = findSmallestTransportPlan(matrix, path);
       
           // Rozpisanie nowej propozycji rozwiazania
           const adjustedMatrix = adjustTransportPlan(matrix, path, smallestTransportPlan);
+          console.log(adjustedMatrix);
       
           // Rekursyjne wywołanie funkcji na zaktualizowanej macierzy
           return optimizeMatrix(adjustedMatrix);
         } else {
+          console.log('koniec');
           // Zwrócenie zoptymalizowanej macierzy
           return matrix;
         }
@@ -282,7 +288,7 @@ function ResultsPanel({ resultsData }) {
         return path;
     }*/
 
-    function obliczPrzesuniecie(matrix, startPos) {
+    /*function obliczPrzesuniecie(matrix, startPos) {
         const { col, row } = startPos;
     
         const directions = [
@@ -302,7 +308,7 @@ function ResultsPanel({ resultsData }) {
             const zeros = [];
     
             while (isValidPosition(row, col)) {
-                if (matrix[row][col] === 0) {
+                if (matrix[row][col] === "x") {
                     zeros.push({ row, col });
                 }
                 row += dr;
@@ -357,11 +363,97 @@ function ResultsPanel({ resultsData }) {
                 path.push(foundPoints[1]);
             }
         }
-    
+        
+        console.log(path);
         return path;
-    }
+    }*/
 
-    function findCommonPointsWithFoundPoints(successorsLists, foundZeros) {
+    function obliczPrzesuniecie(matrix, startPos) {
+      const { col, row } = startPos;
+      
+      const directions = [
+          { dr: -1, dc: 0 },
+          { dr: 0, dc: 1 },
+          { dr: 1, dc: 0 },
+          { dr: 0, dc: -1 }
+      ];
+  
+      const foundZeros = [];
+  
+      function isValidPosition(r, c) {
+          return r >= 0 && r < matrix.length && c >= 0 && c < matrix[0].length;
+      }
+  
+      function findZerosInDirection(row, col, dr, dc) {
+          const zeros = [];
+      
+          while (isValidPosition(row, col)) {
+              if (matrix[row][col] === "x") {
+                  zeros.push({ row, col });
+              }
+              row += dr;
+              col += dc;
+          }
+      
+          return zeros;
+      }
+  
+      for (const direction of directions) {
+          const { dr, dc } = direction;
+          const zeros = findZerosInDirection(row, col, dr, dc);
+          foundZeros.push(...zeros);
+      }
+  
+      // Drugi krok algorytmu
+      const successorsLists = [];
+      for (const zero of foundZeros) {
+          const { row, col } = zero;
+      
+          const successors = [];
+      
+          for (const direction of directions) {
+              const { dr, dc } = direction;
+              const zeros = findZerosInDirection(row + dr, col + dc, dr, dc);
+              
+              for (const zero of zeros) {
+                  if (!foundZeros.some(p => p.row === zero.row && p.col === zero.col)) {
+                      successors.push(zero);
+                  }
+              }
+          }
+      
+          successorsLists.push(successors);
+      }
+      
+      // Znalezienie wspólnych punktów
+      const { commonPoints, foundPoints } = findCommonPointsWithFoundPoints(successorsLists, foundZeros);
+      
+      // Wyznaczenie ścieżki
+      const path = [];
+      let currentPoint = { row, col };
+      
+      // Dodanie punktu startowego do ścieżki
+      path.push(currentPoint);
+      
+      // Dodanie pierwszego przypadku
+      if (foundPoints.length > 0) {
+          path.push(foundPoints[0]);
+      
+          // Dodanie punktu wspólnego
+          for (const commonPoint of commonPoints) {
+              path.push(commonPoint);
+          }
+      
+          if (foundPoints.length > 1) {
+              path.push(foundPoints[1]);
+          }
+      }
+      
+      console.log(path);
+      return path;
+  }
+
+    /*function findCommonPointsWithFoundPoints(successorsLists, foundZeros) {
         const commonPointsSet = new Set();
         const foundPointsMapping = [];
     
@@ -383,7 +475,32 @@ function ResultsPanel({ resultsData }) {
         const foundPoints = foundPointsMapping.map(index => foundZeros[index]);
     
         return { commonPoints, foundPoints };
-    }
+    }*/
+
+    function findCommonPointsWithFoundPoints(successorsLists, foundZeros) {
+      const commonPointsSet = new Set();
+      const foundPointsMapping = [];
+      
+      for (let i = 0; i < successorsLists.length; i++) {
+          const successors = successorsLists[i];
+          for (const point of successors) {
+              if (successorsLists.filter(list => list.some(p => p.row === point.row && p.col === point.col)).length > 1) {
+                  commonPointsSet.add(`${point.row},${point.col}`);
+                  foundPointsMapping.push(i);
+              }
+          }
+      }
+      
+      const commonPoints = Array.from(commonPointsSet).map(point => {
+          const [row, col] = point.split(',');
+          return { row: parseInt(row), col: parseInt(col) };
+      });
+      
+      const foundPoints = foundPointsMapping.map(index => foundZeros[index]);
+      
+      return { commonPoints, foundPoints };
+  }
+  
 
     function findSmallestTransportPlan(matrix, path) {
         let smallestTransportPlan = Infinity;
